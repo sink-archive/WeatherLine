@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -7,8 +8,15 @@ namespace WeatherLine
 {
 	internal static class Program
 	{
-		private static async Task Main()
+		private static string ConfigPath
+			=> Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+							"weatherline.conf.json");
+
+		private static async Task Main(string[] args)
 		{
+			// r for reset?
+			if (args.Contains("-r")) File.Delete(ConfigPath);
+
 			var loc     = await GetLocation();
 			var weather = await MetaWeather.GetWeather(loc);
 			Console.WriteLine("I havent made a nice frontend yet so heres literally all the data in a barely readable format:");
@@ -21,17 +29,13 @@ namespace WeatherLine
 		}
 
 		private static async Task<MetaWeather.Location> GetLocation()
-		{
-			var configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-										  "weatherline.conf.json");
-			
-			MetaWeather.Location loc;
-			if (!File.Exists(configPath))
+		{ MetaWeather.Location loc;
+			if (!File.Exists(ConfigPath))
 				loc = await PickLocation();
 			else
-				loc = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync(configPath))?.Loc ?? await PickLocation();
+				loc = JsonSerializer.Deserialize<Config>(await File.ReadAllTextAsync(ConfigPath))?.Loc ?? await PickLocation();
 
-			await File.WriteAllTextAsync(configPath, JsonSerializer.Serialize(new Config { Loc = loc }));
+			await File.WriteAllTextAsync(ConfigPath, JsonSerializer.Serialize(new Config { Loc = loc }));
 			return loc;
 		}
 
