@@ -17,15 +17,14 @@ namespace WeatherLine
 			// r for reset?
 			if (args.Contains("-r")) File.Delete(ConfigPath);
 
-			var loc     = await GetLocation();
-			var weather = await MetaWeather.GetWeather(loc);
-			Console.WriteLine("I havent made a nice frontend yet so heres literally all the data in a barely readable format:");
-			Console.WriteLine(JsonSerializer.Serialize(weather, new JsonSerializerOptions
-			{
-				WriteIndented = true
-			}));
-			
-			
+			var loc  = await GetLocation();
+			var data = await MetaWeather.GetWeather(loc, DateTime.Today);
+
+			var now = data.Where(d => d.CreatedDate.HasValue)
+						  .OrderBy(d => Math.Abs(d.CreatedDate.Value.Subtract(DateTime.Now).TotalMilliseconds))
+						  .First();
+
+			Console.WriteLine(now.Render());
 		}
 
 		private static async Task<MetaWeather.Location> GetLocation()
