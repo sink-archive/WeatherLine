@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wAKHe5FR1rmZ9bqBbCYQ07+tbJWbbDKL2xxmy5cgvU7OtncXLFjCZxMGtKEcRuFYBIhsp++R1jOnq1TDb/yvDw==",
+  "success": true,
+  "projectFilePath": "/home/cain/source/WeatherLine/WeatherLine/WeatherLine.csproj",
+  "expectedPackageFiles": [
+    "/home/cain/.nuget/packages/jetbrains.annotations/2021.2.0/jetbrains.annotations.2021.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}
