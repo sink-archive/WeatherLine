@@ -11,6 +11,13 @@ namespace WeatherLine
 		{
 			var loc     = await GetLocation();
 			var weather = await MetaWeather.GetWeather(loc);
+			Console.WriteLine("I havent made a nice frontend yet so heres literally all the data in a barely readable format:");
+			Console.WriteLine(JsonSerializer.Serialize(weather, new JsonSerializerOptions
+			{
+				WriteIndented = true
+			}));
+			
+			
 		}
 
 		private static async Task<MetaWeather.Location> GetLocation()

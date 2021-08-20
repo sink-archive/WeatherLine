@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
 
@@ -7,6 +8,7 @@ namespace WeatherLine
 	public static partial class MetaWeather
 	{
 		[UsedImplicitly]
+		[DebuggerDisplay("{Id}: {WeatherState} - {Temp}°C ({Agreement}% agreed}")]
 		public class ConsolidatedWeather
 		{
 			[JsonPropertyName("id")]                     public long     Id                  { get; set; }

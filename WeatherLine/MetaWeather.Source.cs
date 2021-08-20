@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using JetBrains.Annotations;
@@ -9,6 +10,7 @@ namespace WeatherLine
 	public static partial class MetaWeather
 	{
 		[UsedImplicitly]
+		[DebuggerDisplay("{Title} at {Url}")]
 		public class Source
 		{
 			[JsonPropertyName("title")]      public string Title     { get; set; }
